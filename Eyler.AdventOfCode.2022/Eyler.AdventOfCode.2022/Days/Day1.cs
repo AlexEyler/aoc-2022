@@ -1,4 +1,5 @@
 ﻿using System;
+using static Eyler.AdventOfCode._2022.Utilities;
 
 namespace Eyler.AdventOfCode._2022.Days;
 
@@ -76,19 +77,6 @@ public class Day1 : IDay
 
         CheckAndReplaceSum(maxSums, runningSum);
         Console.WriteLine(maxSums.Sum());
-    }
-
-    private static async Task<IEnumerable<string>> ReadLines(Stream stream)
-    {
-        List<string> lines = new();
-        using var streamReader = new StreamReader(stream, leaveOpen: true);
-        string? line;
-        while ((line = await streamReader.ReadLineAsync()) != null)
-        {
-            lines.Add(line!);
-        }
-
-        return lines;
     }
 }
 

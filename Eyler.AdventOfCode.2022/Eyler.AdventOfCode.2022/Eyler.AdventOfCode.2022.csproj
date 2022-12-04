@@ -14,9 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Data\Day2\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Data\*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Eyler.AdventOfCode.SourceGenerator\Eyler.AdventOfCode.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Day2\" />
   </ItemGroup>
 </Project>

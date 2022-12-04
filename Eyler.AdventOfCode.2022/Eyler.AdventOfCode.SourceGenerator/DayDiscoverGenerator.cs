@@ -23,7 +23,7 @@ public partial class DayDiscoverer
 {{
     private IDictionary<string, Func<IDay>> DayMapping = new Dictionary<string, Func<IDay>>(StringComparer.OrdinalIgnoreCase)
     {{
-        {string.Join("\n", days.Select(d => $"{{ \"{d.Name}\", () =>  new {d.ToDisplayString()}() }}"))}
+        {string.Join("\n        ", days.Select(d => $"{{ \"{d.Name}\", () =>  new {d.ToDisplayString()}() }},"))}
     }};
 }}";
             context.AddSource("DayDiscoverer.Map.g.cs", source);
