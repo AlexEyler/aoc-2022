@@ -1,34 +1,61 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.CommandLine;
+using Eyler.AdventOfCode._2022;
 
-var dayOption = new Option<string>(
+var dayRunner = new DayRunner();
+var dayDiscoverer = new DayDiscoverer();
+
+var dayOption = new Option<IDay?>(
     "--day",
-    description: "Day to run");
-
-var fileOption = new Option<FileInfo>(
-    "--input",
-    description: "Input file to run",
+    description: "Day to run",
     parseArgument: result =>
     {
-        var filePath = result.Tokens.Single().Value;
-        if (!File.Exists(filePath))
+        var token = result.Tokens.Single().Value;
+        if (string.IsNullOrEmpty(token))
         {
-            result.ErrorMessage = $"File {filePath} does not exist";
+            result.ErrorMessage = "Missing required day option";
+            return null;
         }
 
-        return new FileInfo(filePath);
+        return dayDiscoverer.GetDay(result.Tokens.Single().Value);
     });
+
+var partOption = new Option<int>(
+    "--part",
+    description: "Part to run in the day",
+    parseArgument: result =>
+    {
+        var token = result.Tokens.Single().Value;
+        if (!int.TryParse(token, out var value))
+        {
+            result.ErrorMessage = "Missing part option";
+            return -1;
+        }
+
+        return value;
+    });
+
+var testCommand = new Command("test", "Test the day")
+{
+    dayOption,
+    partOption
+};
 
 var rootCommand = new RootCommand("Run the day")
 {
     dayOption,
-    fileOption
+    partOption,
+    testCommand
 };
 
-rootCommand.SetHandler(async (day, file) =>
+
+rootCommand.SetHandler(async (day, part) =>
 {
-    Console.WriteLine(day);
-    Console.WriteLine(file);
-}, dayOption, fileOption);
+    await dayRunner.RunAsync(day!, part);
+}, dayOption, partOption);
+testCommand.SetHandler(async (day, part) =>
+{
+    await dayRunner.TestAsync(day!, part);
+}, dayOption, partOption);
 
 return await rootCommand.InvokeAsync(args);

@@ -2,7 +2,8 @@
 
 public interface IDay
 {
-    Task TestAsync(Stream fileStream);
+    string Name { get; }
     Task RunAsync(Stream fileStream);
+    Task RunPartTwoAsync(Stream fileStream) { return Task.CompletedTask; }
 }
 

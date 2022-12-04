@@ -17,8 +17,6 @@
     <None Include="Data\*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eyler.AdventOfCode.SourceGenerator\Eyler.AdventOfCode.SourceGenerator.csproj" 
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Eyler.AdventOfCode.SourceGenerator\Eyler.AdventOfCode.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ public class DayRunner
     private readonly string rootFilePath;
 
     public DayRunner()
-        : this("/Users/alexeyler/Development/aoc/2022/Eyler.AdventOfCode.2022/Eyler.AdventOfCode.2022")
+        : this("/Users/alexeyler/Development/aoc/2022/Eyler.AdventOfCode.2022/Eyler.AdventOfCode.2022/Data")
     {
     }
 
@@ -17,24 +17,40 @@ public class DayRunner
         this.rootFilePath = rootFilePath;
     }
 
-    public Task TestAsync(IDay day)
+    public Task TestAsync(IDay day, int part)
     {
-        return day.TestAsync(OpenTestFile());
+        using var file = OpenTestFile(day);
+        if (part == 2)
+        {
+            return day.RunPartTwoAsync(file);
+        }
+        else
+        {
+            return day.RunAsync(file);
+        }
     }
 
-    public Task RunAsync(IDay day)
+    public async Task RunAsync(IDay day, int part)
     {
-        return day.RunAsync(OpenInputFile());
+        using var file = OpenInputFile(day);
+        if (part == 2)
+        {
+            await day.RunPartTwoAsync(file);
+        }
+        else
+        {
+            await day.RunAsync(file);
+        }
     }
 
-    private Stream OpenTestFile()
+    private Stream OpenTestFile(IDay day)
     {
-        return File.OpenRead(Path.Combine(this.rootFilePath, TestFileName));
+        return File.OpenRead(Path.Combine(this.rootFilePath, day.Name, TestFileName));
     }
 
-    private Stream OpenInputFile()
+    private Stream OpenInputFile(IDay day)
     {
-        return File.OpenRead(Path.Combine(this.rootFilePath, InputFileName));
+        return File.OpenRead(Path.Combine(this.rootFilePath, day.Name, InputFileName));
     }
 }
 
